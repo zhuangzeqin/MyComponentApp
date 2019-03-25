@@ -1,0 +1,84 @@
+ext {
+    //有重用的地方写在这里面，保证代码一致
+    android = [compileSdkVersion       : 27,
+               buildToolsVersion       : "27.1.1",
+               minSdkVersion           : 18,
+               targetSdkVersion        : 27,
+               versionCode             : 1,
+               versionName             : "1.0.0",
+               androidSupportSdkVersion: "27.1.1",
+               rxlifecycleSdkVersion   : "2.2.2",
+               butterknifeSdkVersion   : "8.8.1",
+               okhttpSdkVersion        : "3.10.0",
+               autodisposeSdkVersion   : "0.7.0",
+               retrofitSdkVersion      : "2.4.0"
+    ]
+    dependencies = [
+            //-------------------------------------------------------------------基础集成的模块------------------------------------------------------------------------
+            //androidtest
+            "junit"                             : "junit:junit:4.12",
+            "runner"                            : "com.android.support.test:runner:1.0.2",
+            "espresso-core"                     : "com.android.support.test.espresso:espresso-core:3.0.2",
+            // androidSupport
+            "javax.annotation"                  : "javax.annotation:jsr250-api:1.0",
+            "appcompat-v7"                      : "com.android.support:appcompat-v7:${android["androidSupportSdkVersion"]}",
+            "design"                            : "com.android.support:design:${android["androidSupportSdkVersion"]}",
+            "support-v4"                        : "com.android.support:support-v4:${android["androidSupportSdkVersion"]}",
+            "cardview-v7"                       : "com.android.support:cardview-v7:${android["androidSupportSdkVersion"]}",
+            "annotations"                       : "com.android.support:support-annotations:${android["androidSupportSdkVersion"]}",
+            "recyclerview-v7"                   : "com.android.support:recyclerview-v7:${android["androidSupportSdkVersion"]}",
+            "constraint-layout"                 : 'com.android.support.constraint:constraint-layout:1.1.3',//约束性布局
+            //网络框架
+            "retrofit"                          : "com.squareup.retrofit2:retrofit:${android["retrofitSdkVersion"]}",
+            "retrofit-converter-gson"           : "com.squareup.retrofit2:converter-gson:${android["retrofitSdkVersion"]}",
+            "retrofit-adapter-rxjava"           : "com.squareup.retrofit2:adapter-rxjava:2.2.0",
+            "adapter-rxjava2"                   : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
+            "converter-scalars"                 : "com.squareup.retrofit2:converter-scalars:${android["retrofitSdkVersion"]}",
+            "okhttp3"                           : "com.squareup.okhttp3:okhttp:${android["okhttpSdkVersion"]}",
+            "logging-interceptor"               : "com.squareup.okhttp3:logging-interceptor:${android["okhttpSdkVersion"]}",
+            "gson"                              : "com.google.code.gson:gson:2.8.4",
+            //RX
+            "rxjava"                            : "io.reactivex.rxjava2:rxjava:2.1.17",
+            "rxandroid"                         : "io.reactivex.rxjava2:rxandroid:2.0.2",
+            /*Rx生命周期管理*/
+            "rxlifecycle-components"            : "com.trello.rxlifecycle2:rxlifecycle-components:${android["rxlifecycleSdkVersion"]}",
+            "rxlifecycle"                       : "com.trello.rxlifecycle2:rxlifecycle:${android["rxlifecycleSdkVersion"]}",
+            //AutoDispose解决RxJava内存泄漏
+            "autodispose"                       : "com.uber.autodispose:autodispose:${android["autodisposeSdkVersion"]}",
+            "autodispose-android"               : "com.uber.autodispose:autodispose-android:${android["autodisposeSdkVersion"]}",
+            "autodispose-android-archcomponents": "com.uber.autodispose:autodispose-android-archcomponents:${android["autodisposeSdkVersion"]}",
+            //阿里的路由框架arouter
+            "arouter-api"                       : "com.alibaba:arouter-api:1.3.1",
+            "arouter-compiler"                  : "com.alibaba:arouter-compiler:1.1.4",
+            // butterknife注解框架
+            "butterknife"                       : "com.jakewharton:butterknife:${android["butterknifeSdkVersion"]}",
+            "butterknife-apt"                   : "com.jakewharton:butterknife-compiler:${android["butterknifeSdkVersion"]}",
+            //-------------------------------------------------------------------------------------------------------------------------------------------
+            //奔溃日志的收集
+            "spiderman"                         : "com.simple:spiderman:1.1.0",
+            //图片的压缩工具
+            "CompressHelper"                    : "com.github.nanchen2251:CompressHelper:1.0.5",
+            //图片的放大缩小公交类
+            "PhotoView"                         : "com.github.chrisbanes:PhotoView:2.0.0",
+            //otto 通讯机制
+            "otto"                              : "com.squareup:otto:1.3.8",
+            //强大的logger 日志输出工具类
+            "logger"                            : "com.orhanobut:logger:2.2.0",
+            //easypermissions是谷歌给出的一个运行时权限申请库
+            "easypermissions"                   : "pub.devrel:easypermissions:1.2.0",
+            /** 一个Adapter同时适用于RecyclerView、ListView、GridView、Spinner等**/
+            "superadapter"                      : "org.byteam.superadapter:superadapter:3.6.8",
+            /** 一个Adapter适用于分组的情况下**/
+            "GroupedRecyclerViewAdapter"        : "com.github.donkingliang:GroupedRecyclerViewAdapter:1.2.2",
+            /** 一个下拉刷新加载更多的一个第三方库适用于分页的情况下**/
+            "SmartRefreshLayout"                : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1",
+            /** picasso 图片加载库 **/
+            "picasso"                           : "com.squareup.picasso:picasso:2.71828",
+            /** multidex dex  **/
+            "multidex"                          : "com.android.support:multidex:1.0.2",
+            /** 强大的 textview 控件 能够满足日常需要的场景**/
+            "SuperTextView"                     : "com.github.lygttpod:SuperTextView:2.1.7",
+            /** 强大的 时间选择器、省市区三级联动 控件 能够满足日常需要的场景**/
+            "Android-PickerView"                : "com.contrarywind:Android-PickerView:4.1.5"
+    ]
+}

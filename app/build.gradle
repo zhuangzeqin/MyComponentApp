@@ -1,0 +1,150 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'eeepay'
+            keyPassword 'eeepay'
+            storeFile file('androidkeystore1.jks')
+            storePassword 'eeepay'
+        }
+    }
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+//    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    defaultConfig {
+        applicationId "com.eeepay.zzq.demo.cpa"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+                arguments = [moduleName: project.getName()]
+            }
+        }
+        multiDexEnabled = true
+        //X5Webview需要如下配置，因为他只支持32位的
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
+    }
+    buildTypes {
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "DEBUG_MODEL", "false"
+            //add by zhuangzeqin 二〇一九年三月二十二日 11:34:03 通过代码中判断；可以动态的组合某个模块
+            buildConfigField "boolean", "isHomeModule", "${isHomeModule}"
+            buildConfigField "boolean", "isChatModule", "${isChatModule}"
+            buildConfigField "boolean", "isMineModule", "${isMineModule}"
+            minifyEnabled false
+            shrinkResources false //移除无用的资源
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "DEBUG_MODEL", "true"
+            //add by zhuangzeqin 二〇一九年三月二十二日 11:34:03 通过代码中判断；可以动态的组合某个模块
+            buildConfigField "boolean", "isHomeModule", "${isHomeModule}"
+            buildConfigField "boolean", "isChatModule", "${isChatModule}"
+            buildConfigField "boolean", "isMineModule", "${isMineModule}"
+            minifyEnabled false
+            shrinkResources false //移除无用的资源
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    dexOptions {
+//        incremental true
+        preDexLibraries = false
+        jumboMode true
+        javaMaxHeapSize "4g"
+    }
+    //清除重复包
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'recyclerview-v7'
+        all*.exclude group: 'com.android.support', module: 'support-v4'
+        all*.exclude group: 'com.nineoldandroids', module: 'library' //去除重复依赖库
+    }
+
+
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            //生成自定义 App 名称
+            if (variant.buildType.name.equals("release")) {
+                def appName = "" + variant.productFlavors.name + "_v" + variant.productFlavors.versionName + "_" + new Date().format("yyyyMMdd_HHmm") + ".apk"
+                def appName2 = appName.replace("[", "");
+                def appName3 = appName2.replace("]", "");
+                //add by zhuangzeqin 2017年11月16日 17:42:11 自定义生成目录--根据不同的渠道项目名称去生成目录
+                def version = "v" + variant.productFlavors.versionName;//版本号
+                def channel_name = variant.productFlavors.manifestPlaceholders.getAt("app_name").toString();
+                //渠道的项目名称
+                def dirName = channel_name + "/" + version + "/" + appName3//目录生成
+                def dirNameTimp = dirName.replace("[", "")
+                def dirNameLast = dirNameTimp.replace("]", "")
+                outputFileName = dirNameLast
+            }
+
+        }
+    }
+
+    //渠道包设置
+//    flavorDimensions "color"
+//    productFlavors {
+//        superchange {
+//            minSdkVersion rootProject.ext.android.minSdkVersion
+//            applicationId 'cn.eeepay.zzq.base.demo'
+//            manifestPlaceholders = [app_name: "BaseProject"]//每新增一个OEM 这里需要定义一下
+//            signingConfig signingConfigs.config
+//            versionCode 103
+//            versionName "1.0.1"
+//            dimension "color"
+//        }
+//    }
+}
+repositories {
+    flatDir {
+        dirs 'libs' // aar目录
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    /* testImplementation rootProject.ext.dependencies["junit"]
+        androidTestImplementation rootProject.ext.dependencies["runner"]
+        androidTestImplementation rootProject.ext.dependencies["espresso-core"]*/
+    implementation 'android.arch.lifecycle:runtime:1.1.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.0'
+    //阿里的路由框架arouter
+    implementation rootProject.ext.dependencies["arouter-api"]
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+    // butterknife注解框架
+    implementation rootProject.ext.dependencies["butterknife"]
+    annotationProcessor rootProject.ext.dependencies["butterknife-apt"]
+    //    implementation project(':lib_common')
+    if (!isChatModule.toBoolean()) {
+        implementation project(':chat')
+    }
+    if (!isHomeModule.toBoolean()) {
+        implementation project(':home')
+    }
+    if (!isMineModule.toBoolean()) {
+        implementation project(':mine')
+    }
+    //    implementation project(path: ':home', configuration: 'default')
+    //    implementation project(path: ':chat', configuration: 'default')
+    //    implementation project(path: ':mine', configuration: 'default')
+    implementation project(':lib_common')
+}

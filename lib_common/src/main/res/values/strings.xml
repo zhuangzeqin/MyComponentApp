@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">lib_common</string>
+    <string name="eposp_android_error_exception">异常日志</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+    <string name="loading">请稍候...</string>
+    <string name="permission_camera_denied">您拒绝拍照和设备存储权限，会影响应用的正常使用，请到应用管理处开启权限</string>
+    <string name="permission_denied">您拒绝获取权限，会影响应用的正常使用，请到应用管理处开启权限</string>
+    <string name="permission_setting">去设置</string>
+    <string name="permission_cancel">取消</string>
+    <string name="permission_title">温馨提示</string>
+    <string name="dialog_title">温馨提示</string>
+    <string name="page_error">网络开小差了</string>
+    <string name="page_error_retry">点击重试</string>
+    <string name="page_empty">暂无新数据</string>
+</resources>

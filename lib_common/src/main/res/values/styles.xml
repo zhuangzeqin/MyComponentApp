@@ -1,0 +1,36 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!--沉浸式状态栏-->
+    <style name="AppTheme.TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <style name="dialog_custom_style" parent="android:Theme.Dialog">
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <style name="App.Theme.Dialog.Alert" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/progress_color</item>
+        <item name="android:background">@color/progress_color</item>
+    </style>
+
+    <declare-styleable name="BlinkLayout">
+        <attr name="blink_color" format="color|reference"/>
+        <attr name="blink_animation_duration" format="integer|reference"/>
+    </declare-styleable>
+</resources>
